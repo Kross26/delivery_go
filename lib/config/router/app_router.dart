@@ -10,4 +10,4 @@ final appRouter = GoRouter(initialLocation: '/', routes: [
     builder: (context, state) => const SliderLanding(),
   ),
 ]);
-//
+// slider
