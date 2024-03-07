@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:delivery_go/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,7 +25,7 @@ final slides = <SlideInfo>[
 ];
 
 class SliderLanding extends StatefulWidget {
-  static const name = 'slider_screen';
+  static const String name = 'slider_screen';
 
   const SliderLanding({super.key});
 
@@ -76,8 +77,11 @@ class _SliderLandingState extends State<SliderLanding> {
               right: 20,
               top: 50,
               child: TextButton(
-                child: const Text('Salir'),
-                onPressed: () => context.pop(),
+                child: const Text('Skip'),
+                onPressed: () {
+                  // navegation homescreen with go router
+                  context.pushNamed(HomeScreen.name);
+                },
               )),
           endReached
               ? Positioned(
@@ -87,7 +91,10 @@ class _SliderLandingState extends State<SliderLanding> {
                     from: 15,
                     delay: const Duration(seconds: 1),
                     child: FilledButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () {
+                        // navegation homescreen with go router
+                        context.pushNamed(HomeScreen.name);
+                      },
                       child: const Text('Comenzar'),
                     ),
                   ))
