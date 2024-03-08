@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:delivery_go/presentation/screens/home_screen.dart';
+import 'package:delivery_go/presentation/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -77,10 +78,10 @@ class _SliderLandingState extends State<SliderLanding> {
               right: 20,
               top: 50,
               child: TextButton(
-                child: const Text('Skip'),
+                child: const Text('Skip to login'),
                 onPressed: () {
                   // navegation homescreen with go router
-                  context.pushNamed(HomeScreen.name);
+                  context.pushNamed(RegisterHome.name);
                 },
               )),
           endReached
@@ -93,7 +94,7 @@ class _SliderLandingState extends State<SliderLanding> {
                     child: FilledButton(
                       onPressed: () {
                         // navegation homescreen with go router
-                        context.pushNamed(HomeScreen.name);
+                        context.pushNamed(RegisterHome.name);
                       },
                       child: const Text('Comenzar'),
                     ),
