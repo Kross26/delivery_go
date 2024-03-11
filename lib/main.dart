@@ -10,8 +10,9 @@ class MainApp extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
+    // go router
     return MaterialApp.router(
-      title: 'DeliveryGoo',
+      title: 'DeliveryGo',
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
     );

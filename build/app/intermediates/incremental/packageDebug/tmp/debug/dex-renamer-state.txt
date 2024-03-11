@@ -1,4 +1,4 @@
-#Fri Mar 08 20:22:08 CLST 2024
+#Mon Mar 11 16:24:10 CLST 2024
 base.0=C\:\\Users\\Diego\\Desktop\\Flutter proyects\\AppDelivery\\delivery_go\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

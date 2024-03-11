@@ -18,12 +18,6 @@ final appRouter = GoRouter(
       ),
 
       GoRoute(
-        path: '/register_home',
-        name: RegisterScreen.name,
-        builder: (context, state) => RegisterScreen(),
-      ),
-
-      GoRoute(
         path: '/register_screen',
         name: RegisterScreen.name,
         builder: (context, state) => RegisterScreen(),
