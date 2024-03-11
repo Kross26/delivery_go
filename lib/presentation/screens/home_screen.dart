@@ -21,7 +21,9 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.grey[300],
         title: const Text('Product Search'),
       ),
       body: SafeArea(
@@ -50,9 +52,13 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ElevatedButton(
-              style: const ButtonStyle(),
+              style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.purple)),
               onPressed: _fetchProductDetails,
-              child: const Text('Search'),
+              child: const Text(
+                'Search',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             const SizedBox(height: 20),
             // NOT EMPTY
@@ -80,7 +86,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _fetchProductDetails() async {
-    // Verificar si _productId is empty or show showdialog
+    // Verify _productId is empty or show showdialog
     if (_productId.isEmpty) {
       showDialog(
         context: context,
