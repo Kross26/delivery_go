@@ -1,4 +1,3 @@
-import 'package:delivery_go/presentation/screens/register_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:delivery_go/presentation/screens/screens.dart';
 
@@ -20,8 +19,8 @@ final appRouter = GoRouter(
 
       GoRoute(
         path: '/register_home',
-        name: RegisterHome.name,
-        builder: (context, state) => const RegisterHome(),
+        name: RegisterScreen.name,
+        builder: (context, state) => RegisterScreen(),
       ),
 
       GoRoute(
