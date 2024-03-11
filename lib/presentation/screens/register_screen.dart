@@ -138,8 +138,8 @@ class RegisterScreen extends StatelessWidget {
                     'Not a member?',
                     style: TextStyle(color: Colors.grey[700]),
                   ),
-                  SizedBox(width: 5),
-                  Text(
+                  const SizedBox(width: 5),
+                  const Text(
                     'Register now',
                     style: TextStyle(
                         color: Colors.deepPurpleAccent,
