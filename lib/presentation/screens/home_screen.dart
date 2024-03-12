@@ -1,179 +1,55 @@
-import 'dart:convert';
+import 'package:delivery_go/presentation/screens/screens.dart';
+import 'package:delivery_go/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  // navegation gorouter
   static const String name = 'home_screen';
+  const HomeScreen({super.key});
 
   @override
-  HomeScreenState createState() => HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-// variables to be used later
-class HomeScreenState extends State<HomeScreen> {
-  late String _productId;
-  late String _productName;
-  late String _productImage;
-  bool _isLoading = false; // Add loading state variable
+class _HomeScreenState extends State<HomeScreen> {
+  int currentIndex = 0;
 
-// state variables
-  @override
-  void initState() {
-    super.initState();
-    _productId = '';
-    _productName = '';
-    _productImage = '';
-  }
-
-  // interface user
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        // AppBar with a title 'Product Search'.
-        backgroundColor: Colors.grey[300],
-        title: const Text('Product Search'),
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: TextField(
-                // textField where the user can enter the product ID
-                decoration: const InputDecoration(
-                  hintText: 'Enter ID',
-                  hintStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
-                  labelText: 'Product ID',
-                  labelStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _productId = value;
-                  });
-                },
-              ),
-            ),
-            ElevatedButton(
-              // elevatedButton 'search' that calls _fetchProductDetails() when pressed.
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.purple),
-              ),
+    final screens = [
+      const HomeScreen(),
+      const SearchView(),
+      const ProfileView()
+    ];
 
-              // si la funcion _isloading es "false" se establece como _fetchProductDetails
-              onPressed: _isLoading
-                  ? null
-                  : _fetchProductDetails, // pero si es "true" el boton de la funcion on pressed es "null" se deshabilita, mientras entra en un estado de carga
-              child: _isLoading
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                    ) // se muestra si _isloading es "true"
-                  : const Text(
-                      // se muestra si _isloading es "false"
-                      'Search',
-                      style: TextStyle(color: Colors.white),
-                    ),
-            ),
-            const SizedBox(height: 20),
-            if (_productName.isNotEmpty)
-              Column(
-                children: [
-                  Text(
-                    // Shows the product name and product image if available
-                    'Product Name: $_productName',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 20),
-                  if (_productImage.isNotEmpty)
-                    Image.network(_productImage)
-                  else
-                    const SizedBox(),
-                ],
-              ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[300],
+        title: const Text(
+          'Home',
+          style: TextStyle(fontWeight: FontWeight.w400),
         ),
       ),
-    );
-  }
-
-  // method that makes an HTTP request to the API
-  Future<void> _fetchProductDetails() async {
-    if (_productId.isEmpty) {
-      // checks if the product ID is empty and shows an error dialog if so
-      _showErrorDialog('Please enter ID');
-      return;
-    }
-
-    setState(() {
-      _isLoading = true; // Set loading state to true when starting the request
-    });
-
-    try {
-      final response = await http.get(Uri.parse(
-          'https://api.spoonacular.com/food/products/$_productId?apiKey=c2586dd5afe747eda9f45412406ef8bc'));
-
-      if (response.statusCode == 200) {
-        // If the request is successful, update the state variables
-        final Map<String, dynamic> productDetails = jsonDecode(response.body);
-        setState(() {
-          // state variables update
-          _productName = productDetails['title'];
-          _productImage = productDetails['image'];
-        });
-        // If the request fails, show an error dialog
-      } else {
-        _resetProductDetails();
-        throw Exception('Failed to load product');
-      }
-    } catch (e) {
-      _resetProductDetails();
-      _showErrorDialog('Failed to load product');
-    } finally {
-      setState(() {
-        _isLoading =
-            false; // Set loading state to false when request is completed
-      });
-    }
-  }
-
-  // method resets the _productName and _productImage state variables to empty values.
-  void _resetProductDetails() {
-    setState(() {
-      _productName = '';
-      _productImage = '';
-    });
-  }
-
-  // this method show error dialog (widget AlertDialog)
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        backgroundColor: Colors.grey[300],
+        elevation: 0,
+        selectedIndex: currentIndex,
+        onDestinationSelected: (int index) {
+          setState(
+            () {
+              currentIndex = index;
+            },
+          );
+        },
+      ),
     );
   }
 }
