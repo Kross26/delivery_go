@@ -31,12 +31,12 @@ class RegisterScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // welcome back, you've been miseed!
+              // welcome back
               Text(
-                'Welcome back, you ve been miseed!',
+                'Welcome back',
                 style: TextStyle(
                   color: Colors.grey[700],
-                  fontSize: 16,
+                  fontSize: 19,
                 ),
               ),
 

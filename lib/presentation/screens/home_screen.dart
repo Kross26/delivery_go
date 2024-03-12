@@ -17,6 +17,7 @@ class HomeScreenState extends State<HomeScreen> {
   late String _productId;
   late String _productName;
   late String _productImage;
+  bool _isLoading = false; // Add loading state variable
 
 // state variables
   @override
@@ -65,15 +66,24 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ElevatedButton(
-              // elevatedButton 'eearch' that calls _fetchProductDetails() when pressed.
+              // elevatedButton 'search' that calls _fetchProductDetails() when pressed.
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.purple),
               ),
-              onPressed: () => _fetchProductDetails(),
-              child: const Text(
-                'Search',
-                style: TextStyle(color: Colors.white),
-              ),
+
+              // si la funcion _isloading es "false" se establece como _fetchProductDetails
+              onPressed: _isLoading
+                  ? null
+                  : _fetchProductDetails, // pero si es "true" el boton de la funcion on pressed es "null" se deshabilita, mientras entra en un estado de carga
+              child: _isLoading
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    ) // se muestra si _isloading es "true"
+                  : const Text(
+                      // se muestra si _isloading es "false"
+                      'Search',
+                      style: TextStyle(color: Colors.white),
+                    ),
             ),
             const SizedBox(height: 20),
             if (_productName.isNotEmpty)
@@ -83,9 +93,7 @@ class HomeScreenState extends State<HomeScreen> {
                     // Shows the product name and product image if available
                     'Product Name: $_productName',
                     style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                        fontSize: 18, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 20),
                   if (_productImage.isNotEmpty)
@@ -108,6 +116,10 @@ class HomeScreenState extends State<HomeScreen> {
       return;
     }
 
+    setState(() {
+      _isLoading = true; // Set loading state to true when starting the request
+    });
+
     try {
       final response = await http.get(Uri.parse(
           'https://api.spoonacular.com/food/products/$_productId?apiKey=c2586dd5afe747eda9f45412406ef8bc'));
@@ -128,6 +140,11 @@ class HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       _resetProductDetails();
       _showErrorDialog('Failed to load product');
+    } finally {
+      setState(() {
+        _isLoading =
+            false; // Set loading state to false when request is completed
+      });
     }
   }
 
