@@ -64,7 +64,8 @@ class SearchViewState extends State<SearchView> {
               ElevatedButton(
                 // elevatedButton 'search' that calls _fetchProductDetails() when pressed.
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.purple),
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.deepPurpleAccent),
                 ),
 
                 // si la funcion _isloading es "false" se establece como _fetchProductDetails

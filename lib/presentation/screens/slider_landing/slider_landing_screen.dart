@@ -91,6 +91,9 @@ class _SliderLandingState extends State<SliderLanding> {
                     from: 15,
                     delay: const Duration(seconds: 1),
                     child: FilledButton(
+                      style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                              Colors.deepPurpleAccent)),
                       onPressed: () {
                         // navegation homescreen with go router
                         context.pushNamed(RegisterScreen.name);
